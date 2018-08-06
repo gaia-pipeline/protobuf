@@ -16,7 +16,7 @@ message Job {
     uint32              unique_id   = 1;    
     string              title       = 2;
     string              description = 3;
-    repeated string     dependson   = 4;
+    repeated uint32     dependson   = 4;
     map<string, string> args        = 5;
     ManualInteraction   interaction = 6;
 }

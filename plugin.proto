@@ -17,8 +17,16 @@ message Job {
     string              title       = 2;
     string              description = 3;
     repeated uint32     dependson   = 4;
-    map<string, string> args        = 5;
+    repeated Argument   args        = 5;
     ManualInteraction   interaction = 6;
+}
+
+// Argument represents an argument passed from a pipeline 
+// to gaia and/or from gaia to the pipeline. 
+message Argument {
+    string description = 1;
+    string type        = 2;
+    string value       = 3;
 }
 
 // ManualInteraction represents a manual human interaction

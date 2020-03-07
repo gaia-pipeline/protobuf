@@ -58,8 +58,6 @@ message Output {
     string key = 1;
     // The value of the output.
     string value = 2;
-    // The type of the value.
-    string type = 3;
 }
 
 // Empty message

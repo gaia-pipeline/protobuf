@@ -1,7 +1,7 @@
 // plugin.proto
 // Defines the gRPC interface between gaia and the user defined
 // pipelines (plugins). All rpc Methods are called from Gaia and
-// executed in the plugin. 
+// executed in the plugin.
 
 syntax = "proto3";
 
@@ -13,7 +13,7 @@ package proto;
 
 // Job represents a single job
 message Job {
-    uint32              unique_id   = 1;    
+    uint32              unique_id   = 1;
     string              title       = 2;
     string              description = 3;
     repeated uint32     dependson   = 4;
@@ -21,8 +21,10 @@ message Job {
     ManualInteraction   interaction = 6;
 }
 
-// Argument represents an argument passed from a pipeline 
-// to gaia and/or from gaia to the pipeline. 
+// Argument represents an argument passed from a pipeline
+// to gaia and/or from gaia to the pipeline.
+// In addition, an argument can come from a previous job's
+// output value.
 message Argument {
     string description = 1;
     string type        = 2;
@@ -39,13 +41,28 @@ message ManualInteraction {
 
 // JobResult represents the result of an executed job
 message JobResult {
-    uint32 unique_id      = 1;
-    bool   failed         = 2;
-    bool   exit_pipeline  = 3;
-    string message        = 4;
+    uint32 unique_id       = 1;
+    bool   failed          = 2;
+    bool   exit_pipeline   = 3;
+    string message         = 4;
+    repeated Output output = 5;
 }
 
-// Empty message 
+// Any output of a given job. This can include something like a generated DNS name
+// in the form of:
+// "DNS": "https://my-awesome-service.com/app"
+// The output is a repeated key-value message. This output can be fed to the next
+// job as an argument.
+message Output {
+    // Key of the output/
+    string key = 1;
+    // The value of the output.
+    string value = 2;
+    // The type of the value.
+    string type = 3;
+}
+
+// Empty message
 message Empty {}
 
 service Plugin {

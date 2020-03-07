@@ -19,6 +19,9 @@ message Job {
     repeated uint32     dependson   = 4;
     repeated Argument   args        = 5;
     ManualInteraction   interaction = 6;
+    // Output of the finished job if any will be passed down to the
+    // JobResult.
+    repeated Output     outs        = 7;
 }
 
 // Argument represents an argument passed from a pipeline
